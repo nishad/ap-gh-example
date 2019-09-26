@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{site.data.ap.descriptionSet.title}}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+        {{site.data.ap.descriptionSet.title}}
+      </h1>
+      <p class="subtitle">
+        {{site.data.ap.descriptionSet.notes}}
+      </p>
+<table class="table">
+  <thead>
+    <tr>
+      <th><abbr title="descID">descID</abbr></th>
+      <th><abbr title="displayName">displayName</abbr></th>
+      <th><abbr title="property">property</abbr></th>
+    </tr>
+  </thead>
+<tbody>
+
+{%- assign descriptions = site.data.ap.descriptions %}
+
+{%- for description in descriptions %}
+<tr>
+<th>{{description.descID}}</th> 
+<td>{{description.displayName}}</td>
+<td>{{description.property}}</td>
+</tr>
+{%- endfor %}
+
+</tbody>
+
+
+{%- assign descriptions = site.data.ap.descriptions %}
+
+{%- for description in descriptions %}
+<table class="table">
+  <thead>
+    <tr>
+      <th><abbr title="descID">statementID</abbr></th>
+      <th><abbr title="displayName">displayName</abbr></th>
+      <th><abbr title="property">property</abbr></th>
+      <th><abbr title="type">type</abbr></th>
+    </tr>
+  </thead>
+<tbody>
+
+
+{%- for statement in description.statements %}
+<tr>
+<th>{{statement.statementID}}</th> 
+<td>{{statement.displayName}}</td>
+<td>{{statement.property}}</td>
+<td>{{statement.type}}</td>
+</tr>
+{%- endfor %}
+
+</tbody>
+</table>
+{%- endfor %}
+
+<a href="ap.shex">MAP in ShExC</a> <a href="ap.json">MAP in JSON</a>
+    </div>
+  </section>
+
+  
+
+  </body>
+</html>

@@ -1,0 +1,114 @@
+%YAML 1.1
+---
+
+namespaces:
+  dc: http://purl.org/dc/terms/
+  bibframe: http://id.loc.gov/ontologies/bibframe/
+  foaf: http://xmlns.com/foaf/0.1/
+  schema: http://schema.org/
+  xsd: http://www.w3.org/2001/XMLSchema#
+
+value:
+
+  - &value_literal_3_250
+    valueID: value_literal_3_250
+    dataType: xsd:string 
+    minLength: 3 
+    maxLength: 250
+  
+  - &any_name
+    valueID: any_name
+    dataType: xsd:string
+    
+  - &url
+    valueID: url
+    dataType: xsd:anyURI
+
+statements:
+
+  - &title
+    statementID: title 
+    displayName: Title
+    property: dc:title
+    type: literal
+    value : *value_literal_3_250
+
+  - &name
+    statementID: name 
+    displayName: Name
+    property: foaf:name
+    type: literal
+    value: *any_name
+  
+  - &homepage
+    statementID: homepage
+    displayName: Homepage
+    property: foaf:homepage
+    type: IRI
+    value: *url
+
+  - &organization
+    statementID: organization 
+    displayName: Organization
+    property: foaf:Organization
+    type: literal
+    value : *any_name
+
+
+descriptions:
+
+  - &book
+    descID: book 
+    displayName: Book
+    property: schema:Book
+    statements: 
+      - << : *title
+        minOccur : 1
+        maxOccur : 1
+
+  - &creator
+    descID: creator 
+    displayName: Creator 
+    property: dc:creator
+    statements: 
+      - << : *name
+        minOccur : 1
+        maxOccur : -1
+      - << : *homepage
+        minOccur : 0
+        maxOccur : 1
+
+  - &publisher
+    descID: publisher 
+    displayName: publisher
+    property: dc:publisher
+    statements: 
+      - << : *organization
+        minOccur : 1
+        maxOccur : 1
+      - << : *homepage
+        minOccur : 0
+        maxOccur : 1
+
+  - &distributor
+    descID: distributor 
+    displayName: Distributor
+    property: bibframe:Distribution
+    notes: >
+        Online and offline distributors can be included. 
+        For the case of online distributors, 
+        also, add the storefront as a homepage.
+    statements: 
+      - << : *organization
+        minOccur : 1
+        maxOccur : -1
+      - << : *homepage
+        minOccur : 0
+        maxOccur : -1
+
+descriptionSet: 
+
+  descSetID: BookCase
+  title: The Book Case
+  notes: The curios case of a book as an application profile
+  descriptions : [*book, *creator, *publisher, *distributor]

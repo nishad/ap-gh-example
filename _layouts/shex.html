@@ -1,0 +1,29 @@
+{%- for prefix in site.data.ap.namespaces %}
+PREFIX {{prefix[0]}}: <{{prefix[1]}}>
+{%- endfor %}
+BASE <http://purl.org/yama/example/mybook/v021/#>
+
+{%- assign descriptionSet = site.data.ap.descriptionSet %}
+
+<{{descriptionSet.descSetID}}> {
+  {%- for description in descriptionSet.descriptions %}
+  {{description.property}} @<{{description.descID}}>;
+  {%- endfor %}
+}
+
+{%- assign descriptions = site.data.ap.descriptions %}
+
+{%- for description in descriptions %}
+<{{description.descID}}> {
+  {%- for statement in description.statements%}
+  {{statement.property}} @<{{statement.statementID}}> { {{statement.minOccur}},{{statement.maxOccur}} };
+  {%- endfor %}
+}
+{%- endfor %}
+
+{%- assign statements = site.data.ap.statements %}
+{%- for statement in statements %}
+<{{statement.statementID}}> {
+    {{statement.property}} {% unless statement.value %} {{ statement.type }} {% endunless %} {{statement.value.dataType}} ;
+}
+{%- endfor %}
